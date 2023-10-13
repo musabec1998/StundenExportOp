@@ -14,7 +14,7 @@ namespace StundenExportOp.Controllers
     {
 
         HttpClient client = new HttpClient();
-        static string apiKey = "dcc4870b2b96bc1936e1065a6bf0172ed6632b976f2d454983157639390cfc20";
+        static string apiKey = "";
         string auth = Convert.ToBase64String(Encoding.UTF8.GetBytes("apikey:" + apiKey));
 
 
