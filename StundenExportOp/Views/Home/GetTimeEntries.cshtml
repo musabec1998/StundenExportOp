@@ -1,0 +1,10 @@
+﻿@using StundenExportOp.Models
+@model  ViewModel
+
+@if (Model.entries != null)
+{
+    foreach (var item in Model.entries)
+    {
+        <h2>@item.raw</h2>
+    }
+}

@@ -1,0 +1,51 @@
+﻿@using StundenExportOp.Models
+@model ViewModel
+
+<div>
+    <form action="/Home/GetCombinedView" method="post">
+        <label for="nameDropdown">Name Auswählen:</label>
+        <select id="nameDropdown" name="userId">
+            @foreach (var name in Model.userData)
+            {
+<option value="@name.id">@name.name</option>            }
+        </select>
+
+
+        <label for="dateDropdownYear">Jahr:</label>
+        <select name="year">
+            <option value="2019-">2019</option>
+            <option value="2020-">2020</option>
+            <option value="2021-">2021</option>
+            <option value="2022-">2022</option>
+            <option value="2023-">2023</option>
+        </select>
+
+        </br>
+        <label for="dateDropdown">Monat:</label>
+        <select name="month">
+            <option value="01-0101-31">Januar</option>
+            <option value="02-0102-28">Februar</option>
+            <option value="03-0103-31">März</option>
+            <option value="04-0104-30">April</option>
+            <option value="05-0105-31">Mai</option>
+            <option value="06-0106-30">Juni</option>
+            <option value="07-0107-31">Juli</option>
+            <option value="08-0108-31">August</option>
+            <option value="09-0109-30">September</option>
+            <option value="10-0110-31">Oktober</option>
+            <option value="11-0111-30">November</option>
+            <option value="12-0112-31">Dezember</option>
+        </select>
+
+        <input type="submit" name="submit" value="Abschicken">
+    </form>
+
+    @if (Model.entries != null)
+    {
+        foreach (var item in Model.entries)
+        {
+            <h2>@item.raw</h2>}
+
+        }
+
+            </div>

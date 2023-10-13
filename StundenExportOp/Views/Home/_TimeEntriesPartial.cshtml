@@ -1,0 +1,9 @@
+﻿@using StundenExportOp.Models
+@model List<TimeEntries.Comment>
+
+@if (Model != null && Model.Any())
+{
+    foreach (var item in Model)
+    {
+<h2>@item.raw</h2>}
+            }
