@@ -7,7 +7,8 @@
         <select id="nameDropdown" name="userId">
             @foreach (var name in Model.userData)
             {
-<option value="@name.id">@name.name</option>            }
+<option value="@name.id">@name.name</option>
+}
         </select>
 
 
@@ -40,12 +41,67 @@
         <input type="submit" name="submit" value="Abschicken">
     </form>
 
-    @if (Model.entries != null)
-    {
-        foreach (var item in Model.entries)
+ 
+    <style>   
+        table
         {
-            <h2>@item.raw</h2>}
-
+            width: 80%;
+            border: 1px solid black;
+            
+        }       
+        td
+        {
+            border:1px solid black;
         }
+        th{
+            background-color: lightgrey;
+            font-weight:bold;
+            border: 1px solid black;
+        }
+        td:nth-child(odd){
+            background-color:lightblue
+        }
+        td:nth-child(even){
+            background-color:floralwhite
+        }
+    </style>
 
-            </div>
+<table>
+
+    <tr>
+        <th>Nr.</th>
+        <th>TicketID</th>
+        <th>Datum</th>
+        <th>Projekt</th>
+        <th>Tätigkeit</th>
+        <th>Zeit</th>
+    </tr>
+    @{ 
+        int counter = 0;
+        int counter2 = 1; 
+     }
+    @if (Model.project != null)
+    {
+        foreach (var proj in Model.project)
+        {
+        <tr>
+            <td>@counter2</td>
+            <td>@Model.id[counter].id</td>
+            <td>@Model.date[counter].spentOn</td>
+            <td>@proj.title</td>
+            <td>@Model.entries[counter].raw</td>
+            <td>@Model.hours[counter].hours</td>     
+            
+        </tr>
+            counter2++;
+            counter++;
+        }
+    }
+
+
+</table>
+    
+
+
+    
+</div>

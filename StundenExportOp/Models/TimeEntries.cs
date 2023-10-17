@@ -7,6 +7,8 @@ namespace StundenExportOp.Models
 {
     public class TimeEntries
     {
+        //Datum und Ticket ID noch anzeigen
+
 
         public class TimeEntrie
         {

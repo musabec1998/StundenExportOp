@@ -152,8 +152,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ApiClient.cs" />
+    <Compile Include="Models\GetDate.cs" />
     <Compile Include="Models\GetEntries.cs" />
-    <Compile Include="Models\GetNames.cs" />
+    <Compile Include="Models\GetId.cs" />
+    <Compile Include="Models\GetTime.cs" />
+    <Compile Include="Models\GetUser.cs" />
+    <Compile Include="Models\GetProject.cs" />
+    <Compile Include="Models\TimeEntrieData.cs" />
     <Compile Include="Models\TimeEntries.cs" />
     <Compile Include="Models\UserData.cs" />
     <Compile Include="Models\Users.cs" />
