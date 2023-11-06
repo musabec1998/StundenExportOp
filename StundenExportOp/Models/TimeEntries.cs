@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Xml.Serialization;
 
 namespace StundenExportOp.Models
 {
     public class TimeEntries
     {
-        //Datum und Ticket ID noch anzeigen
-
 
         public class TimeEntrie
         {
@@ -20,12 +19,12 @@ namespace StundenExportOp.Models
             public _Embedded _embedded { get; set; }
             public _Links1 _links { get; set; }
         }
-
+        [XmlType(TypeName = "EntriesEmbedded")]
         public class _Embedded
         {
             public Element[] elements { get; set; }
         }
-
+        [XmlType(TypeName = "EntriesElement")]
         public class Element
         {
             public string _type { get; set; }
@@ -38,6 +37,7 @@ namespace StundenExportOp.Models
             public string customField22 { get; set; }
             public string customField25 { get; set; }
             public _Links _links { get; set; }
+
         }
 
         public class Comment
@@ -47,6 +47,7 @@ namespace StundenExportOp.Models
             public string html { get; set; }
         }
 
+        [XmlType(TypeName="TimeEntrieLinks")]
         public class _Links
         {
             public Self self { get; set; }
@@ -60,29 +61,30 @@ namespace StundenExportOp.Models
             public Activity activity { get; set; }
         }
 
+        [XmlType(TypeName = "EntriesSelf")]
         public class Self
         {
             public string href { get; set; }
         }
-
+        [XmlType(TypeName = "EntrieUpdateImmediately")]
         public class Updateimmediately
         {
             public string href { get; set; }
             public string method { get; set; }
         }
-
+        [XmlType(TypeName = "EntriesUpdate")]
         public class Update
         {
             public string href { get; set; }
             public string method { get; set; }
         }
-
+        [XmlType(TypeName = "EntriesDelete")]
         public class Delete
         {
             public string href { get; set; }
             public string method { get; set; }
         }
-
+        [XmlType(TypeName = "EntrieSchema")]
         public class Schema
         {
             public string href { get; set; }
@@ -111,7 +113,7 @@ namespace StundenExportOp.Models
             public string href { get; set; }
             public string title { get; set; }
         }
-
+        [XmlType(TypeName = "EntriesLinks1")]
         public class _Links1
         {
             public Self1 self { get; set; }
@@ -121,18 +123,18 @@ namespace StundenExportOp.Models
             public Createtimeentry createTimeEntry { get; set; }
             public Createtimeentryimmediately createTimeEntryImmediately { get; set; }
         }
-
+        [XmlType(TypeName = "EntriesSelf1")]
         public class Self1
         {
             public string href { get; set; }
         }
-
+        [XmlType(TypeName = "EntrieJumpto")]
         public class Jumpto
         {
             public string href { get; set; }
             public bool templated { get; set; }
         }
-
+        [XmlType(TypeName = "EntrieChangeSize")]
         public class Changesize
         {
             public string href { get; set; }
@@ -156,7 +158,14 @@ namespace StundenExportOp.Models
             public string method { get; set; }
         }
 
-
+        //var ancestorGroupa = (
+        //       from entry in ancestor
+        //       from eintrag in entry.ancestors
+        //       from eingang in projectTitel
+        //       where eintrag.title == eingang.href
+        //       group eintrag by eingang.href into grouped
+        //       select new { Key = grouped.Key, Hrefs = grouped.Select(g => g.href).Distinct().ToList() }
+        //   ).ToDictionary(g => g.Key, g => g.Hrefs);
 
     }
 }

@@ -34,6 +34,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -149,21 +151,47 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Functions\OPDataManager.cs" />
+    <Compile Include="Functions\RMDataManager.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ApiClient.cs" />
+    <Compile Include="Models\ApiFilterConstructor.cs" />
+    <Compile Include="Models\FilterClass.cs" />
+    <Compile Include="Models\GetAncestorProject.cs" />
+    <Compile Include="Models\GetCustomFields.cs" />
     <Compile Include="Models\GetDate.cs" />
     <Compile Include="Models\GetEntries.cs" />
     <Compile Include="Models\GetId.cs" />
+    <Compile Include="Models\GetRedMineTimEntries.cs" />
+    <Compile Include="Models\GetRedMineUsers.cs" />
+    <Compile Include="Models\GetRedMineVersions.cs" />
+    <Compile Include="Models\GetSumTime.cs" />
     <Compile Include="Models\GetTime.cs" />
     <Compile Include="Models\GetUser.cs" />
     <Compile Include="Models\GetProject.cs" />
-    <Compile Include="Models\TimeEntrieData.cs" />
+    <Compile Include="Models\GetWorkPackageId.cs" />
+    <Compile Include="Models\GetWorkPackageProjectId.cs" />
+    <Compile Include="Models\LinkTrimm.cs" />
+    <Compile Include="Models\OPDataRetrievel.cs" />
+    <Compile Include="Models\Projects.cs" />
+    <Compile Include="Models\RedMineApiClient.cs" />
+    <Compile Include="Models\RedMineTicketFinder.cs" />
+    <Compile Include="Models\RedMineEntrieFilter.cs" />
+    <Compile Include="Models\RedMineTimeEntries.cs" />
+    <Compile Include="Models\RedMineUsers.cs" />
+    <Compile Include="Models\RedMineVersions.cs" />
+    <Compile Include="Models\RedMineViewModel.cs" />
+    <Compile Include="Models\RMDataRetrievel.cs" />
+    <Compile Include="Models\testoo1.cs" />
     <Compile Include="Models\TimeEntries.cs" />
     <Compile Include="Models\UserData.cs" />
     <Compile Include="Models\Users.cs" />
     <Compile Include="Models\ViewModel.cs" />
+    <Compile Include="Models\ViewModelFiller.cs" />
+    <Compile Include="Models\WorkPackages.cs" />
+    <Compile Include="Models\WorkPackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -178,6 +206,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\ViewHandlerJs.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -202,10 +231,8 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\GetNames.cshtml" />
-    <Content Include="Views\Home\GetTimeEntries.cshtml" />
-    <Content Include="Views\Home\_TimeEntriesPartial.cshtml" />
     <Content Include="Views\Home\GetCombinedView.cshtml" />
+    <Content Include="Views\Home\GetRedMineData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -13,23 +13,11 @@ namespace StundenExportOp.Models
 {
     public class GetProject
     {
+        LinkTrimm trimmer = new LinkTrimm();
 
-        public HttpClient client = new HttpClient();
-
-
-
-        public async Task<List<TimeEntries.Project>> GetProjectTitle(string year,string month,string userId,string apiKey)
+        public async Task<List<TimeEntries.Project>> GetProjectTitle(string response)
         {
-            int id = Int32.Parse(userId);
-            string auth = Convert.ToBase64String(Encoding.UTF8.GetBytes("apikey:" + apiKey));
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", auth);
-
-
-            string filter = Uri.EscapeDataString($"[{{\"spentOn\":{{\"operator\":\"<>d\",\"values\":[\"{year + month.Substring(0, 5)}\",\"{year + month.Substring(5)}\"]}}}},{{\"user\":{{\"operator\":\"=\",\"values\":[\"{id}\"]}}}}]")+ "&pageSize=500";
-            string Url = $"https://project.aixtrusion.de/api/v3/time_entries?filters={filter}";
-
-
-            string response = await client.GetStringAsync(Url);
+            
 
             var json = JsonSerializer.Deserialize<TimeEntrie>(response);
 
@@ -39,7 +27,10 @@ namespace StundenExportOp.Models
             {
                 var projects = new TimeEntries.Project
                 {
-                    title = element._links.project.title
+
+                    title = element._links.project.title,
+                    href= trimmer.TrimStringforId(element._links.project.href)
+                               
                 };
                 project.project.Add(projects);
 

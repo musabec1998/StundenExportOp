@@ -12,19 +12,13 @@ namespace StundenExportOp.Models
 {
     public class GetUser
     {
-        public ApiClient apiclient1 = new ApiClient();
 
-        
-       
-
-        public async Task<List<UserData>> GetUserData(string auth)
-        {
-
-           
+             
+        public async Task<List<UserData>> GetUserData(string auth,ApiClient client)
+        {           
                 //suchstring für User
-                string users = "https://project.aixtrusion.de/api/v3/users?pageSize=500";
-                //Antwort von Api(Users)
-                string response = await apiclient1.GetApiResponseAsync(users,auth);
+                string usersUrl = "https://project.aixtrusion.de/api/v3/users?pageSize=500";
+                string response = await client.GetApiResponseAsync(usersUrl, auth);
                 var data =  JsonSerializer.Deserialize<Users.User>(response);
 
                 List<UserData> userDataList = new List<UserData>();
