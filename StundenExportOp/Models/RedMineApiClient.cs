@@ -14,7 +14,7 @@ namespace StundenExportOp.Models
     {
 
         HttpClient client = new HttpClient();
-        private string proxyAdress= "192.168.179.35:3128";
+        private string proxyAdress= "...:";
 
 
 
