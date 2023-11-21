@@ -21,6 +21,7 @@ namespace StundenExportOp.Models
         string test2 = "hallo";
         
         string test3 = "hallo3";
+        string test4 = "hallo4";
 
           
             var json = JsonSerializer.Deserialize<TimeEntrie>(response);
