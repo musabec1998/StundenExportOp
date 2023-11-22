@@ -14,8 +14,6 @@ namespace StundenExportOp.Models
     public class GetDate
     {
 
-string testbranch = "hallo";
-
 
         public async Task<List<TimeEntries.Element>> GetSpentOnDate(string response)
         {
