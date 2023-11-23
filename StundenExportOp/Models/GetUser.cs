@@ -10,23 +10,16 @@ using System.Web;
 
 namespace StundenExportOp.Models
 {
-    public class GetNames
+    public class GetUser
     {
 
-       
-
-        public async Task<List<UserData>> GetUserData(string apiKey,HttpClient client,string auth)
-        {
-
-            using (client)
-            {
+             
+        public async Task<List<UserData>> GetUserData(string auth,ApiClient client)
+        {           
                 //suchstring für User
-                string users = "https://project.aixtrusion.de/api/v3/users?pageSize=500";
-                //Autorisierung
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", auth);
-                //Api antwort wird deserialized
-                string response = await client.GetStringAsync(users);
-                var data = JsonSerializer.Deserialize<Users.User>(response);
+                string usersUrl = "https://project.aixtrusion.de/api/v3/users?pageSize=500";
+                string response = await client.GetApiResponseAsync(usersUrl, auth);
+                var data =  JsonSerializer.Deserialize<Users.User>(response);
 
                 List<UserData> userDataList = new List<UserData>();
 
@@ -42,7 +35,7 @@ namespace StundenExportOp.Models
                     userDataList.Add(user);
                 }
                 return userDataList;
-            }
+            
         }
     }
 

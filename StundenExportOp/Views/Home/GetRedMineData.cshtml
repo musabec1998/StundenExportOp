@@ -1,0 +1,210 @@
+﻿@using StundenExportOp.Models
+@model RedMineViewModel
+<div>
+    <form asp-action="/Home/GetRedMineData">
+
+
+        <br />
+
+        @foreach (var projektnum in Model.projektNum)
+        {
+            bool isChecked = Model.selectedProjekt == projektnum;
+            <input type="radio" name="projectselect" value="@projektnum" id="radio_@projektnum" @(isChecked ? "checked" : "") />
+            <label for="radio_@projektnum">@projektnum</label>
+            <br />
+
+            <br />
+            <input type="submit" value="Tickets erhalten" />
+
+        }
+
+    </form>
+    </br>
+
+    <form asp-action="/Home/GetRedMineData" method="post">
+
+        @if (Model.selectedProjekt != null)
+        {
+            foreach (var ticket in Model.tickets)
+            {
+                bool isChecked = Model.ticketselect == ticket.id;
+                <div>
+                    <table>
+                        <th>Auswahl</th>
+                        <th>Thema</th>
+                        <th>Beschreibung</th>
+                        <th>Name</th>
+                        <th>Offene Stunden</th>
+                        <th>Gültig bis</th>
+
+                        <tr>
+                            <td>
+                                <input type="radio" name="ticketselect" value="@ticket.id" id="radio_@ticket.id" @(isChecked ? "checked" : "") />
+                                <label for="radio_@ticket.id">@ticket.id</label>
+                            </td>
+                            <td>@ticket.subject</td>
+                            <td>@ticket.description</td>
+                            <td>@ticket.fixed_version.name</td>
+                            <td>@ticket.custom_fields[0].value</td>
+                            <td>@ticket.due_date</td>
+                        </tr>
+
+
+
+                    </table>
+
+                    @*<strong>@ticket.subject</strong>
+                        <p>@ticket.description</p>
+                        <p>Version: @ticket.fixed_version.name</p>
+                        <p>Offene Stunden: @ticket.custom_fields[0].value</p>
+
+                        <input type="radio" name="ticketselect" value="@ticket.id" id="radio_@ticket.id" @(isChecked ? "checked" : "") />
+                        <label for="radio_@ticket.id">@ticket.id</label>
+                        <br />*@
+                </div>
+
+            }
+
+            <br>
+
+            <p>Summe Stunden: <span id="timeDisplay"></span></p>
+
+
+
+
+            <input type="submit" value="RedMine Eintrag erstellen" />
+            <br>
+            </br>
+            <table>
+
+                <tr>
+                    <th>Alle<input type="checkbox" id="selectAll" /> </th>
+                    <th>Nr.</th>
+                    <th>WorkPackage(Mouseover für CustomFields)</th>
+                    <th>Datum</th>
+                    <th>Projekt(Mouseover für verwandte Projekte)</th>
+                    <th>Tätigkeit</th>
+                    <th>Zeit</th>
+                </tr>
+                @{
+                    int counter = 0;
+                    int counter2 = 1;
+                    int counter3 = 0;
+                }
+
+                @if (Model.tickets != null)
+                {
+
+                    foreach (var proj in Model.model.project)
+                    {
+                        counter3++;
+
+                        if (Model.model.customFields.ContainsKey(@Model.model.workpackages[counter].href))
+                        {
+                            foreach (var number in Model.model.customFields[Model.model.workpackages[counter].href])
+                            {
+
+                                if (number.Split(':')[1] == Model.selectedProjekt)
+                                {
+                                    @*@Model.model.date[counter].spentOn*@
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" class="dateCheckbox" data-time="@Model.model.hours[counter].hours" value="@counter" name="packagechoice" />
+                                        </td>
+                                        <td>@counter2</td>
+
+                                        <td class="hoverContainer">
+                                            <div class="myDiv">@Model.model.workpackages[counter].href</div>
+                                            <div class="hiddenContent">
+                                                <span>//@number</span>
+                                            </div>
+
+
+                                        </td>
+
+                                        <td>@Model.model.date[counter].spentOn</td>
+                                        <td class="hoverContainer">
+                                            <div class="myDiv">@proj.title</div>
+                                            <div class="hiddenContent">
+                                                @if (Model.model.ancestorGroup.ContainsKey(proj.href))
+                                                {
+                                                    foreach (var hrefValue in Model.model.ancestorGroup[proj.href])
+                                                    {
+                                                        <span>ID: @hrefValue</span>
+
+                                                    }
+                                                }
+                                            </div>
+
+                                        </td>
+                                        <td>@Model.model.entries[counter].raw</td>
+                                        <td>@Model.model.hours[counter].hours</td>
+
+
+                                    </tr>
+                                    counter2++;
+
+                                }
+
+
+
+
+                            }
+
+                        }
+
+                        counter++;
+
+                    }
+                }
+
+
+
+
+            </table>
+
+        }
+</div>
+    </form>
+
+
+<script src="~/Scripts/ViewHandlerJs.js"></script>
+
+<style>
+    table {
+        width: 100%;
+        border: 1px solid black;
+    }
+
+    td {
+        border: 1px solid black;
+    }
+
+    th {
+        background-color: lightgrey;
+        font-weight: bold;
+        border: 1px solid black;
+    }
+
+    td:nth-child(odd) {
+        background-color: lightgrey
+    }
+
+    td:nth-child(even) {
+        background-color: floralwhite
+    }
+
+    .hiddenContent {
+        display: none;
+        color: red;
+    }
+
+    .hoverContainer:hover .hiddenContent {
+        display: block;
+    }
+
+    hr {
+        height: 20px;
+        color: black;
+    }
+</style>

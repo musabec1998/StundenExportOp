@@ -1,51 +1,182 @@
 ﻿@using StundenExportOp.Models
 @model ViewModel
-
+  
+</br>
 <div>
     <form action="/Home/GetCombinedView" method="post">
         <label for="nameDropdown">Name Auswählen:</label>
-        <select id="nameDropdown" name="userId">
+        <select id="nameDropdown" name="userId" value="@Model.name">
             @foreach (var name in Model.userData)
             {
-<option value="@name.id">@name.name</option>            }
-        </select>
-
-
-        <label for="dateDropdownYear">Jahr:</label>
-        <select name="year">
-            <option value="2019-">2019</option>
-            <option value="2020-">2020</option>
-            <option value="2021-">2021</option>
-            <option value="2022-">2022</option>
-            <option value="2023-">2023</option>
+                <option value="@name.id" @(Model.userId == name.id ? "selected" : "")>@name.name</option>
+            }
         </select>
 
         </br>
-        <label for="dateDropdown">Monat:</label>
-        <select name="month">
-            <option value="01-0101-31">Januar</option>
-            <option value="02-0102-28">Februar</option>
-            <option value="03-0103-31">März</option>
-            <option value="04-0104-30">April</option>
-            <option value="05-0105-31">Mai</option>
-            <option value="06-0106-30">Juni</option>
-            <option value="07-0107-31">Juli</option>
-            <option value="08-0108-31">August</option>
-            <option value="09-0109-30">September</option>
-            <option value="10-0110-31">Oktober</option>
-            <option value="11-0111-30">November</option>
-            <option value="12-0112-31">Dezember</option>
+        <label for="dateDropdownYear">Jahr:</label>
+        <select name="year" value="@Model.year">
+            @*<option value="2019-" @(Model.year == "2019-" ? "selected" : "")>2019</option>*@
+            <option value="2020-" @(Model.year == "2020-" ? "selected" : "")>2020</option>
+            <option value="2021-" @(Model.year == "2021-" ? "selected" : "")>2021</option>
+            <option value="2022-" @(Model.year == "2022-" ? "selected" : "")>2022</option>
+            <option value="2023-" @(Model.year == "2023-" ? "selected" : "")>2023</option>
         </select>
 
-        <input type="submit" name="submit" value="Abschicken">
+
+        <label for="dateDropdown">Monat:</label>
+        <select name="month" value="@Model.month">
+            <option value="01-0101-31" @(Model.month == "01-0101-31" ? "selected" : "")>Januar</option>
+            <option value="02-0102-28" @(Model.month == "02-0102-28" ? "selected" : "")>Februar</option>
+            <option value="03-0103-31" @(Model.month == "03-0103-31" ? "selected" : "")>März</option>
+            <option value="04-0104-30" @(Model.month == "04-0104-30" ? "selected" : "")>April</option>
+            <option value="05-0105-31" @(Model.month == "05-0105-31" ? "selected" : "")>Mai</option>
+            <option value="06-0106-30" @(Model.month == "06-0106-30" ? "selected" : "")>Juni</option>
+            <option value="07-0107-31" @(Model.month == "07-0107-31" ? "selected" : "")>Juli</option>
+            <option value="08-0108-31" @(Model.month == "08-0108-31" ? "selected" : "")>August</option>
+            <option value="09-0109-30" @(Model.month == "09-0109-30" ? "selected" : "")>September</option>
+            <option value="10-0110-31" @(Model.month == "10-0110-31" ? "selected" : "")>Oktober</option>
+            <option value="11-0111-30" @(Model.month == "11-0111-30" ? "selected" : "")>November</option>
+            <option value="12-0112-31" @(Model.month == "12-0112-31" ? "selected" : "")>Dezember</option>
+        </select>
+
+        </br>
+        </br>
+
+        <input type="submit" name="submit" value="Einträge erhalten">
     </form>
 
-    @if (Model.entries != null)
-    {
-        foreach (var item in Model.entries)
-        {
-            <h2>@item.raw</h2>}
+    </br>
 
+    <style>
+        table {
+            width: 100%;
+            border: 1px solid black;
         }
 
-            </div>
+        td {
+            border: 1px solid black;
+        }
+
+        th {
+            background-color: lightgrey;
+            font-weight: bold;
+            border: 1px solid black;
+        }
+
+        td:nth-child(odd) {
+            background-color: lightgrey
+        }
+
+        td:nth-child(even) {
+            background-color: floralwhite
+        }
+
+        .hiddenContent {
+            display: none;
+            color: red;
+        }
+
+        .hoverContainer:hover .hiddenContent {
+            display: block;
+        }
+
+        hr {
+            height: 20px;
+            color: black;
+        }
+    </style>
+
+
+    <hr />
+
+    <table>
+
+        <tr>
+            <th>Nr.</th>
+            <th>WorkPackage(Mouseover für CustomFields)</th>
+            <th>Datum</th>
+            <th>Projekt(Mouseover für verwandte Projekte)</th>
+            <th>Tätigkeit</th>
+            <th>Zeit</th>
+        </tr>
+        @{
+            int counter = 0;
+            int counter2 = 1;
+        }
+
+        @if (Model.project != null)
+        {
+            foreach (var proj in Model.project)
+            {
+                <tr>
+                    <td>@counter2</td>
+
+                    <td class="hoverContainer">
+                        <div class="myDiv">@Model.workpackages[counter].href</div>
+                        <div class="hiddenContent">
+                            @if (Model.customFields.ContainsKey(@Model.workpackages[counter].href))
+                            {
+                                foreach (var customField in Model.customFields[Model.workpackages[counter].href])
+                                {
+                                    <span>//@customField</span>
+                                }
+
+
+
+                            }
+                        </div>
+
+
+                    </td>
+
+                    <td>@Model.date[counter].spentOn</td>
+                    <td class="hoverContainer">
+                        <div class="myDiv">@proj.title</div>
+                        <div class="hiddenContent">
+                            @if (Model.ancestorGroup.ContainsKey(proj.href))
+                            {
+                                foreach (var hrefValue in Model.ancestorGroup[proj.href])
+                                {
+                                    <span>ID: @hrefValue</span>
+
+                                }
+                            }
+                        </div>
+
+                    </td>
+                    <td>@Model.entries[counter].raw</td>
+                    <td>@Model.hours[counter].hours</td>
+
+
+                </tr>
+                counter2++;
+                counter++;
+            }
+        }
+
+
+    </table>
+
+
+
+    @if (Model.timeSum != null)
+    {
+        foreach (var timesum in Model.timeSum)
+        {
+            <h2>Gesamtstunden:         @timesum</h2>
+        }
+    }
+
+
+<form action="/Home/GetRedMineData" method="post">
+    <input type="submit" name="submit" value="Projekt Auswahl">
+
+
+
+</form>
+
+
+
+
+
+</div>

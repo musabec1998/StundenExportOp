@@ -14,31 +14,25 @@ namespace StundenExportOp.Models
     public class GetEntries
     {
 
-      
-
-        public async Task<List<TimeEntries.Comment>> GetTimeEntries(string year,string month,string _apiKey,HttpClient client,string auth)
+        public async Task<List<TimeEntries.Comment>> GetTimeEntries(string response)
         {
-            
+        
+        string test = "hallo commit test";
+        string test2 = "hallo";
+        
+        string test3 = "hallo3";
+        string test4 = "hallo4";
+        string test5 = "hallo5";
+        string test2121= "jaa";
+        string branchtest1 = "hallobranch1";
 
-            using (client)           
-            {
-                //Autorisierung
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", auth);
-
-                //filter für Api Anfrage.Jahr und Monat getrennt für Dynamische Filteranpassung
-                string filter = Uri.EscapeDataString($"[{{\"spentOn\":{{\"operator\":\"<>d\",\"values\":[\"{year + month.Substring(0, 5)}\",\"{year + month.Substring(5)}\"]}}}},{{\"user\":{{\"operator\":\"=\",\"values\":[\"108\"]}}}}]");
-                string Url = $"https://project.aixtrusion.de/api/v3/time_entries?filters={filter}";
+          
+            var json = JsonSerializer.Deserialize<TimeEntrie>(response);
                 
-                //Api antwort wird deserialized
-                string response = await client.GetStringAsync("https://project.aixtrusion.de/api/v3/time_entries");
-                var data = JsonSerializer.Deserialize<TimeEntrie>(response);
-                
-                List<TimeEntries.Comment> timeEntriesList = new List<TimeEntries.Comment>();
-
                 ViewModel entrie = new ViewModel();
 
                 //daten von Anfrage werden in die Viewmodel Liste geschrieben
-                foreach (var element in data._embedded.elements)
+                foreach (var element in json._embedded.elements)
                 {
                     var entries = new TimeEntries.Comment
                     {
@@ -49,9 +43,10 @@ namespace StundenExportOp.Models
 
                 }
 
+
                 return entrie.entries;
 
-            }
+            
 
 
 
